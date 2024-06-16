@@ -1,4 +1,4 @@
-import 'package:first_demo/todo_home.dart';
+import 'package:first_demo/task_app/todo_home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Favorite Movies and Songs',
+      title: 'Task App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
