@@ -1,4 +1,4 @@
-import 'package:first_demo/signin_screen.dart';
+import 'package:first_demo/onboarding.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const SignInScreen(),
+      home: const Onboarding(),
     );
   }
 }
