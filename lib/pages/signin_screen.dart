@@ -1,6 +1,7 @@
 import 'package:first_demo/pages/signup_screen.dart';
 import 'package:first_demo/task_app/todo_home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -221,16 +222,15 @@ class _SignInScreenState extends State<SignInScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Image.network(
-                            'http://pngimg.com/uploads/google/google_PNG19635.png',
-                            fit: BoxFit.cover),
+                        SvgPicture.asset('assets/images/icon-google.svg'),
                         const SizedBox(
-                          width: 5.0,
+                          width: 15.0,
                         ),
                         const Text(
                           'Google',
                           style: TextStyle(fontWeight: FontWeight.w800),
-                        )
+          
+                        ),
                       ],
                     ),
                   ),

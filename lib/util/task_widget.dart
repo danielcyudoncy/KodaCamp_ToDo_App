@@ -39,7 +39,7 @@ class TaskWidget extends StatelessWidget {
             ),
             title: Text(
               taskName,
-              style: const TextStyle(color: Colors.blue),
+              style: const TextStyle(color: Colors.black),
             ),
           ),
         ),

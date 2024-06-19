@@ -1,6 +1,7 @@
 import 'package:first_demo/form_app/valid_email.dart';
 import 'package:first_demo/pages/signin_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -296,9 +297,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Image.network(
-                            'http://pngimg.com/uploads/google/google_PNG19635.png',
-                            fit: BoxFit.cover),
+                        SvgPicture.asset('assets/images/icon-google.svg'),
                         const SizedBox(
                           width: 15.0,
                         ),
