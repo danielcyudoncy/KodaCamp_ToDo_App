@@ -3,7 +3,7 @@ import 'package:first_demo/util/task_widget.dart';
 import 'package:flutter/material.dart';
 
 class TodoHome extends StatefulWidget {
-  const TodoHome({super.key});
+  const TodoHome({super.key, required String data});
 
   @override
   State<TodoHome> createState() => _TodoHomeState();

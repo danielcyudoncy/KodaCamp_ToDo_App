@@ -14,6 +14,25 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formSignInKey = GlobalKey<FormState>();
   bool rememberPassword = true;
   bool toggled = false;
+  bool agreePersonalData = true;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _phoneNumberController.dispose();
+    super.dispose();
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,7 +183,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const TodoHome(),
+                          builder: (context) => const TodoHome(data: 'welcome'),
                         ),
                       );
                     },
@@ -223,14 +242,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         SvgPicture.asset('assets/images/icon-google.svg'),
-                        const SizedBox(
-                          width: 15.0,
-                        ),
                         const Text(
                           'Google',
                           style: TextStyle(fontWeight: FontWeight.w800),
-          
-                        ),
+                        )
                       ],
                     ),
                   ),
