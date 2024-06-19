@@ -1,4 +1,4 @@
-import 'package:first_demo/onboarding.dart';
+import 'package:first_demo/pages/onboarding.dart';
 import 'package:flutter/material.dart';
 
 void main() {

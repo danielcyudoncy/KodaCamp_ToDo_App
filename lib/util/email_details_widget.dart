@@ -9,8 +9,6 @@ class EnterDetailsText extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Text('Enter your details below to login',
         style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-            fontWeight: FontWeight.normal));
+            fontSize: 14, color: Colors.grey, fontWeight: FontWeight.normal));
   }
 }

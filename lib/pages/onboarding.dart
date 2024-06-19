@@ -1,6 +1,6 @@
 // features/onboarding/onboarding.dart
-import 'package:first_demo/signin_screen.dart';
-import 'package:first_demo/signup_screen.dart';
+import 'package:first_demo/pages/signin_screen.dart';
+import 'package:first_demo/pages/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';

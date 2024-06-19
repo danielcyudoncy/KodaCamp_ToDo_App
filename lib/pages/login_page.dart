@@ -1,6 +1,6 @@
-import 'package:first_demo/email_details_widget.dart';
-import 'package:first_demo/email_text_field.dart';
-import 'package:first_demo/password_text_field.dart';
+import 'package:first_demo/util/email_details_widget.dart';
+import 'package:first_demo/util/email_text_field.dart';
+import 'package:first_demo/util/password_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
