@@ -1,3 +1,4 @@
+import 'package:first_demo/form_app/valid_email.dart';
 import 'package:first_demo/pages/signup_screen.dart';
 import 'package:first_demo/task_app/todo_home.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final _formSignInKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   bool rememberPassword = true;
   bool toggled = false;
   bool agreePersonalData = true;
@@ -43,7 +44,7 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Form(
-            key: _formSignInKey,
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -62,24 +63,19 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 40.0,
                 ),
                 TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter Email';
-                    }
-                    return null;
-                  },
+                  controller: _emailController,
                   decoration: InputDecoration(
                     label: const Text('Email'),
-                    hintText: 'Enter Email',
+                    hintText: 'Enter your Email',
                     hintStyle: const TextStyle(
                       color: Colors.black26,
                     ),
                     border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
                         color: Colors.black12, // Default border color
                       ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                                          ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
                         color: Colors.black12, // Default border color
@@ -87,16 +83,23 @@ class _SignInScreenState extends State<SignInScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    validateEmail(value!);
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 25.0,
                 ),
+
                 TextFormField(
+                  controller: _passwordController,
                   obscureText: toggled,
                   obscuringCharacter: '*',
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter Password';
+                    if (value == null || value.isEmpty || value.length < 6) {
+                      return 'Password must be at least 6 characters long!';
                     }
                     return null;
                   },

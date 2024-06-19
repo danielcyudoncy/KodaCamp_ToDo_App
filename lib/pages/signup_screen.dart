@@ -1,3 +1,5 @@
+import 'dart:js_util';
+
 import 'package:first_demo/form_app/valid_email.dart';
 import 'package:first_demo/pages/signin_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +14,9 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _formSignupKey = GlobalKey<FormState>();
-  bool agreePersonalData = true;
+  final _formKey = GlobalKey<FormState>();
+    bool agreePersonalData = true;
+  bool toggled = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -28,6 +31,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _phoneNumberController.dispose();
     super.dispose();
   }
+  void _submit() {
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
+    }
+  }
+
   
 
   @override
@@ -38,7 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Form(
-            key: _formSignupKey,
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -112,9 +121,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 15.0,
                 ),
+
                 TextFormField(
                   controller: _passwordController,
+                  obscureText: toggled,
+                  obscuringCharacter: '*',
+                  validator: (value) {
+                    if (value == null || value.isEmpty || value.length < 6) {
+                      return 'Password must be at least 6 characters long!';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: toggled
+                          ? const Icon(
+                              Icons.visibility_off,
+                            )
+                          : const Icon(
+                              Icons.visibility,
+                            ),
+                      onPressed: () {
+                        setState(() {
+                          toggled = !toggled;
+                        });
+                      },
+                    ),
                     labelText: 'Password',
                     hintText: 'Enter your password',
                     hintStyle: const TextStyle(
@@ -130,13 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty || value.length < 6) {
-                      return 'Password must be at least 6 characters long!';
-                    }
-                    return null;
-                  },
+                  
                 ),
                 const SizedBox(
                   height: 15.0,
@@ -144,6 +170,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                   controller: _confirmPasswordController,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: toggled
+                          ? const Icon(
+                              Icons.visibility_off,
+                            )
+                          : const Icon(
+                              Icons.visibility,
+                            ),
+                      onPressed: () {
+                        setState(() {
+                          toggled = !toggled;
+                        });
+                      },
+                    ),
                     labelText: 'Confirm Password',
                     hintText: 'Re-enter your password',
                     hintStyle: const TextStyle(
@@ -159,13 +199,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  obscureText: true,
+                  obscureText: toggled,
+                  obscuringCharacter: '*',
                   validator: (value) {
                     if (value != _passwordController.text) {
                       return "Passwords don't match";
                     }
                     return null;
                   },
+                  
                 ),
                 const SizedBox(
                   height: 15.0,
@@ -231,10 +273,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
 
                 SizedBox(
+                  height: 45,
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_formSignupKey.currentState!.validate() &&
+                      if (_formKey.currentState!.validate() &&
                           agreePersonalData) {
                         
                       } else if (!agreePersonalData) {
@@ -243,7 +286,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               content: Text(
                                   'Please agree to the processing of personal data')),
                         );
-                      }
+                      }           
                     },
                     child: const Text('Sign up'),
                   ),
@@ -287,7 +330,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: 45,
                   child: ElevatedButton(
                     onPressed: () {},
                     child: Row(
@@ -306,7 +349,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                const Gap(10),
+                const Gap(20),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
