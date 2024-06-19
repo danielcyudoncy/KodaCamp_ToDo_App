@@ -30,7 +30,7 @@ class TaskWidget extends StatelessWidget {
         ]),
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              color: Colors.grey, borderRadius: BorderRadius.circular(8)),
           child: ListTile(
             leading: Checkbox(
               value: taskCompleted,

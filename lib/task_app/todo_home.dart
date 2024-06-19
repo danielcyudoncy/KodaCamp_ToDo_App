@@ -54,12 +54,13 @@ class _TodoHomeState extends State<TodoHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 3, 65, 112),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 2, 175, 132),
         title: const Text(
-          'Task App',
-          style: TextStyle(color: Colors.white),
+          'ToDo',
+          style: TextStyle(
+              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
         ),
       ),
       floatingActionButton: FloatingActionButton(
