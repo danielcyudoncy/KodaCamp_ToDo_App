@@ -31,14 +31,11 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: const Text('sign in'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -75,7 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       borderSide: const BorderSide(
                         color: Colors.black12, // Default border color
                       ),
-                                          ),
+                    ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
                         color: Colors.black12, // Default border color
@@ -92,7 +89,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 25.0,
                 ),
-
                 TextFormField(
                   controller: _passwordController,
                   obscureText: toggled,
@@ -186,7 +182,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const TodoHome(data: 'welcome'),
+                          builder: (context) => const TodoHome(
+                            data: 'welcome',
+                            name: 'Daniel',
+                          ),
                         ),
                       );
                     },
