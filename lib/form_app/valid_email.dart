@@ -1,9 +1,11 @@
-String? validateEmail(String value) {
-  if (value.isEmpty) {
+String? validateEmail(String email) {
+  final RegExp emailRegex = RegExp(
+    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+  );
+
+  if (email.isEmpty) {
     return 'Email is required';
-  }
-  if (!RegExp(r'^[a-zA-Z0-9.a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+')
-      .hasMatch(value)) {
+  } else if (!emailRegex.hasMatch(email)) {
     return 'Enter a valid email';
   }
   return null;

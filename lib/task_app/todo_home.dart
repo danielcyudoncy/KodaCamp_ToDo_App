@@ -98,37 +98,99 @@ class _TodoHomeState extends State<TodoHome> {
     });
   }
 
+  int getTotalTasks() {
+    return taskList.length;
+  }
+
+  int getCompletedTasks() {
+    return taskList.where((task) => task[1] == true).length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 233, 216, 216),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        title: const Text(
-          'ToDo',
-          style: TextStyle(
+        backgroundColor: const Color.fromARGB(255, 233, 216, 216),
+        title: Text(
+          'ToDo,  ${widget.name}',
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 26,
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {},
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: const Icon(Icons.notifications),
+              onPressed: () {},
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         onPressed: createNewTask,
         child: const Icon(Icons.add),
       ),
-      body: ListView.builder(
-        itemCount: taskList.length,
-        itemBuilder: (context, index) {
-          return TaskWidget(
-            taskName: taskList[index][0],
-            taskCompleted: taskList[index][1],
-            onChanged: (value) => taskCompleted(value, index),
-            onDelete: (value) => deleteTask(index),
-            onEdit: (value) => editTask(context, index),
-          );
-        },
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Card(
+                    color: Colors.white,
+                    elevation: 2,
+                    child: ListTile(
+                      title: const Text('Total Number of  Tasks'),
+                      trailing: Text(
+                        getTotalTasks().toString(),
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8.0), // Space between the cards
+                Expanded(
+                  child: Card(
+                    color: Colors.white,
+                    elevation: 2,
+                    child: ListTile(
+                      title: const Text('Completed Tasks'),
+                      trailing: Text(
+                        getCompletedTasks().toString(),
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: taskList.length,
+              itemBuilder: (context, index) {
+                return TaskWidget(
+                  taskName: taskList[index][0],
+                  taskCompleted: taskList[index][1],
+                  onChanged: (value) => taskCompleted(value, index),
+                  onDelete: (value) => deleteTask(index),
+                  onEdit: (value) => editTask(context, index),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

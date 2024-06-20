@@ -20,9 +20,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
 
   @override
   void dispose() {
+    _fullNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
@@ -61,6 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 // full name
                 TextFormField(
+                  controller: _fullNameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Full name';
@@ -87,6 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
+
                 const SizedBox(
                   height: 15.0,
                 ),
@@ -110,10 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    validateEmail(value!);
-                    return null;
-                  },
+                  validator: (value) => validateEmail(value!),
                 ),
                 const SizedBox(
                   height: 15.0,
@@ -384,4 +385,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-

@@ -38,7 +38,7 @@ class TaskWidget extends StatelessWidget {
         ]),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(8),
           ),
           child: ListTile(
@@ -46,6 +46,7 @@ class TaskWidget extends StatelessWidget {
               value: taskCompleted,
               onChanged: onChanged,
               activeColor: Colors.black,
+              shape: const CircleBorder(),
             ),
             title: Text(
               taskName,
