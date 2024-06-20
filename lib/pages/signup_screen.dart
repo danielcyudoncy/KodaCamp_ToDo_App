@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:first_demo/form_app/valid_email.dart';
 import 'package:first_demo/pages/signin_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +13,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-    bool agreePersonalData = true;
+  bool agreePersonalData = true;
   bool toggled = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -31,13 +29,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _phoneNumberController.dispose();
     super.dispose();
   }
+
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
     }
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +159,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  
                 ),
                 const SizedBox(
                   height: 15.0,
@@ -207,7 +203,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     }
                     return null;
                   },
-                  
                 ),
                 const SizedBox(
                   height: 15.0,
@@ -279,14 +274,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate() &&
                           agreePersonalData) {
-                        
                       } else if (!agreePersonalData) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                               content: Text(
                                   'Please agree to the processing of personal data')),
                         );
-                      }           
+                      }
                     },
                     child: const Text('Sign up'),
                   ),
@@ -388,10 +382,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
   }
-}// 
+}

@@ -3,17 +3,19 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TaskWidget extends StatelessWidget {
   const TaskWidget({
-    super.key,
+    Key? key,
     required this.taskName,
     required this.taskCompleted,
-    this.onChanged,
-    this.onDelete,
+    required this.onChanged,
+    required this.onDelete,
+    required this.onEdit,
   });
 
   final String taskName;
   final bool taskCompleted;
   final Function(bool?)? onChanged;
   final Function(BuildContext)? onDelete;
+  final Function(BuildContext) onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +24,23 @@ class TaskWidget extends StatelessWidget {
       child: Slidable(
         endActionPane: ActionPane(motion: const StretchMotion(), children: [
           SlidableAction(
+            onPressed: onEdit,
+            icon: Icons.edit,
+            backgroundColor: Colors.blue,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          SlidableAction(
             onPressed: onDelete,
             icon: Icons.delete,
             backgroundColor: Colors.red,
             borderRadius: BorderRadius.circular(8),
-          )
+          ),
         ]),
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.grey, borderRadius: BorderRadius.circular(8)),
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: ListTile(
             leading: Checkbox(
               value: taskCompleted,

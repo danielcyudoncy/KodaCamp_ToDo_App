@@ -15,6 +15,8 @@ class _TodoHomeState extends State<TodoHome> {
     // ['Task 1', false],
     // ['Task 2', true],
   ];
+  int _selectedIndex = 0;
+
   void taskCompleted(bool? value, int index) {
     setState(() {
       taskList[index][1] = !taskList[index][1];
@@ -37,18 +39,61 @@ class _TodoHomeState extends State<TodoHome> {
 
   void createNewTask() {
     showDialog(
-        context: context,
-        builder: (context) {
-          return DialogWidget(
-            controller: controller,
-            onSave: () {
-              saveNewTask();
-            },
-            onCancel: () {
-              Navigator.of(context).pop();
-            },
-          );
-        });
+      context: context,
+      builder: (context) {
+        return DialogWidget(
+          controller: controller,
+          onSave: () {
+            saveNewTask();
+          },
+          onCancel: () {
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
+  void editTask(BuildContext context, int index) {
+    final TextEditingController taskController =
+        TextEditingController(text: taskList[index][0]);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Edit Task'),
+          content: TextField(
+            controller: taskController,
+            decoration: const InputDecoration(labelText: 'Task Name'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                final editedTaskName = taskController.text;
+                setState(() {
+                  taskList[index][0] = editedTaskName;
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text('Save'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -56,11 +101,14 @@ class _TodoHomeState extends State<TodoHome> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 2, 175, 132),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: const Text(
           'ToDo',
           style: TextStyle(
-              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+            color: Colors.black,
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -76,8 +124,27 @@ class _TodoHomeState extends State<TodoHome> {
             taskCompleted: taskList[index][1],
             onChanged: (value) => taskCompleted(value, index),
             onDelete: (value) => deleteTask(index),
+            onEdit: (value) => editTask(context, index),
           );
         },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.preview_rounded),
+            label: 'Projects',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: 'Calendar',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
