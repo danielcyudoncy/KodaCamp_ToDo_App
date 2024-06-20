@@ -1,4 +1,4 @@
-import 'package:first_demo/form_app/valid_email.dart';
+import 'package:first_demo/util/valid_email.dart';
 import 'package:first_demo/pages/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
