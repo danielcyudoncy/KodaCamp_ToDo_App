@@ -8,10 +8,10 @@ class BottomNavigationExample extends StatefulWidget {
       _BottomNavigationExampleState();
 }
 
-class _BottomNavigationExampleState extends State {
+class _BottomNavigationExampleState extends State<BottomNavigationExample> {
   int _selectedTab = 0;
 
-  final List _pages = [
+  final List<Widget> _pages = [
     const Center(
       child: Text("Home"),
     ),
@@ -29,7 +29,7 @@ class _BottomNavigationExampleState extends State {
     ),
   ];
 
-  _changeTab(int index) {
+  void _changeTab(int index) {
     setState(() {
       _selectedTab = index;
     });
@@ -49,7 +49,7 @@ class _BottomNavigationExampleState extends State {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "About"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.grid_3x3_outlined), label: "Product"),
+              icon: Icon(Icons.grid_3x3_outlined), label: "Products"),
           BottomNavigationBarItem(
               icon: Icon(Icons.contact_mail), label: "Contact"),
           BottomNavigationBarItem(
