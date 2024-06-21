@@ -113,7 +113,7 @@ class _TodoHomeState extends State<TodoHome> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 233, 216, 216),
         title: Text(
-          'ToDo,  ${widget.name}',
+          'Hi,  ${widget.name}',
           style: const TextStyle(
             color: Colors.black,
             fontSize: 26,

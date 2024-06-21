@@ -233,7 +233,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 const SizedBox(height: 15.0),
-                // sign up button
                 SizedBox(
                   height: 45,
                   width: double.infinity,
@@ -244,8 +243,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TodoHome(
-                              name: 'Daniel Udoncy',
+                            builder: (context) => TodoHome(
+                              name: _fullNameController.text,
                               data: '',
                             ),
                           ),
