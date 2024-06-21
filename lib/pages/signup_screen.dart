@@ -1,3 +1,4 @@
+import 'package:first_demo/task_app/todo_home.dart';
 import 'package:first_demo/util/valid_email.dart';
 import 'package:first_demo/pages/signin_screen.dart';
 import 'package:flutter/material.dart';
@@ -90,10 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-
-                const SizedBox(
-                  height: 15.0,
-                ),
+                const SizedBox(height: 15.0),
                 // email
                 TextFormField(
                   controller: _emailController,
@@ -116,10 +114,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) => validateEmail(value!),
                 ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-
+                const SizedBox(height: 15.0),
+                // password
                 TextFormField(
                   controller: _passwordController,
                   obscureText: toggled,
@@ -133,12 +129,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                       icon: toggled
-                          ? const Icon(
-                              Icons.visibility_off,
-                            )
-                          : const Icon(
-                              Icons.visibility,
-                            ),
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
                       onPressed: () {
                         setState(() {
                           toggled = !toggled;
@@ -147,34 +139,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     labelText: 'Password',
                     hintText: 'Enter your password',
-                    hintStyle: const TextStyle(
-                      color: Colors.black26,
-                    ),
+                    hintStyle: const TextStyle(color: Colors.black26),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.black12,
-                      ),
+                      borderSide: const BorderSide(color: Colors.black12),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15.0,
-                ),
+                const SizedBox(height: 15.0),
+                // confirm password
                 TextFormField(
                   controller: _confirmPasswordController,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                       icon: toggled
-                          ? const Icon(
-                              Icons.visibility_off,
-                            )
-                          : const Icon(
-                              Icons.visibility,
-                            ),
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
                       onPressed: () {
                         setState(() {
                           toggled = !toggled;
@@ -183,16 +166,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     labelText: 'Confirm Password',
                     hintText: 'Re-enter your password',
-                    hintStyle: const TextStyle(
-                      color: Colors.black26,
-                    ),
+                    hintStyle: const TextStyle(color: Colors.black26),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.black12,
-                      ),
+                      borderSide: const BorderSide(color: Colors.black12),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -205,24 +184,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(
-                  height: 15.0,
-                ),
+                const SizedBox(height: 15.0),
+                // phone number
                 TextFormField(
                   controller: _phoneNumberController,
                   decoration: InputDecoration(
                     labelText: 'Phone Number',
                     hintText: 'Enter your phone number',
-                    hintStyle: const TextStyle(
-                      color: Colors.black26,
-                    ),
+                    hintStyle: const TextStyle(color: Colors.black26),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.black12,
-                      ),
+                      borderSide: const BorderSide(color: Colors.black12),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -234,10 +208,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-
+                const SizedBox(height: 15.0),
+                // agree personal data
                 Row(
                   children: [
                     Checkbox(
@@ -251,23 +223,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const Text(
                       'I agree to the processing of ',
-                      style: TextStyle(
-                        color: Colors.black45,
-                      ),
+                      style: TextStyle(color: Colors.black45),
                     ),
                     const Text(
                       'Personal data',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                          fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-
+                const SizedBox(height: 15.0),
+                // sign up button
                 SizedBox(
                   height: 45,
                   width: double.infinity,
@@ -275,6 +241,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate() &&
                           agreePersonalData) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TodoHome(
+                              name: 'Daniel Udoncy',
+                              data: '',
+                            ),
+                          ),
+                        );
                       } else if (!agreePersonalData) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -286,10 +261,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: const Text('Sign up'),
                   ),
                 ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-
+                const SizedBox(height: 15.0),
+                // sign up with google
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -300,15 +273,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 10,
-                      ),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                       child: Text(
                         'Sign up with',
-                        style: TextStyle(
-                          color: Colors.black45,
-                        ),
+                        style: TextStyle(color: Colors.black45),
                       ),
                     ),
                     Expanded(
@@ -319,10 +288,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-
-                const SizedBox(
-                  height: 15.0,
-                ),
+                const SizedBox(height: 15.0),
                 SizedBox(
                   width: double.infinity,
                   height: 45,
@@ -333,9 +299,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         SvgPicture.asset('assets/images/icon-google.svg'),
-                        const SizedBox(
-                          width: 15.0,
-                        ),
+                        const SizedBox(width: 15.0),
                         const Text(
                           'Google',
                           style: TextStyle(fontWeight: FontWeight.w800),
@@ -345,15 +309,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const Gap(20),
-
+                // already have an account
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
                       'Already have an account? ',
-                      style: TextStyle(
-                        color: Colors.black45,
-                      ),
+                      style: TextStyle(color: Colors.black45),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -367,16 +329,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: const Text(
                         'Sign in',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                            fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                const SizedBox(height: 20.0),
               ],
             ),
           ),
