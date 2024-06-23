@@ -1,3 +1,4 @@
+import 'package:first_demo/pages/signin_screen.dart';
 import 'package:first_demo/pages/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -53,7 +54,7 @@ class Onboarding extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const SignUpScreen(),
+                        builder: (context) => const SignInScreen(),
                       ),
                     );
                   },

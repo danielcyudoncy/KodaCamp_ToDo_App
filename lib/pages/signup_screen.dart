@@ -14,8 +14,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  bool agreePersonalData = true;
-  bool toggled = false;
+  bool agreePersonalData = false;
+  bool toggled = true;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 30.0,
                 ),
-                // full name
+
                 TextFormField(
                   controller: _fullNameController,
                   validator: (value) {
@@ -92,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const SizedBox(height: 15.0),
-                // email
+
                 TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
@@ -115,7 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (value) => validateEmail(value!),
                 ),
                 const SizedBox(height: 15.0),
-                // password
+
                 TextFormField(
                   controller: _passwordController,
                   obscureText: toggled,
@@ -150,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const SizedBox(height: 15.0),
-                // confirm password
+
                 TextFormField(
                   controller: _confirmPasswordController,
                   decoration: InputDecoration(
@@ -185,7 +185,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 const SizedBox(height: 15.0),
-                // phone number
+
                 TextFormField(
                   controller: _phoneNumberController,
                   decoration: InputDecoration(
@@ -202,14 +202,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   keyboardType: TextInputType.phone,
                   validator: (value) {
-                    if (value == null || value.isEmpty || value.length != 10) {
-                      return 'Phone number should be exactly 10 digits';
+                    if (value == null || value.isEmpty || value.length != 11) {
+                      return 'Phone number should be exactly 11 digits';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 15.0),
-                // agree personal data
+
                 Row(
                   children: [
                     Checkbox(
