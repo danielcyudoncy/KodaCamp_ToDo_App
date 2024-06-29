@@ -245,7 +245,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                 ),
-                const Gap(20),
+                const Gap(40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

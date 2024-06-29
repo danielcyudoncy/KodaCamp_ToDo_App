@@ -24,7 +24,7 @@ class Onboarding extends StatelessWidget {
                 text: '!We welcome you to',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 30,
+                    fontSize: 28,
                     color: Colors.black),
                 children: <TextSpan>[
                   TextSpan(
@@ -42,7 +42,7 @@ class Onboarding extends StatelessWidget {
               'Manage all your projects and tasks \n in one place',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.grey,
+                color: Colors.black54,
                 fontSize: 18,
               ),
             ),
@@ -82,7 +82,7 @@ class Onboarding extends StatelessWidget {
                   child: Text(
                     'Don\'t have an account? ',
                     style: TextStyle(
-                      color: Colors.black45,
+                      color: Colors.black54,
                     ),
                   ),
                 ),
