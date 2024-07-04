@@ -223,7 +223,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const Text(
                       'I agree to the processing of ',
-                      style: TextStyle(color: Colors.black45),
+                      style: TextStyle(color: Colors.black54),
                     ),
                     const Text(
                       'Personal data',
@@ -232,7 +232,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 15.0),
+                const SizedBox(height: 25.0),
                 SizedBox(
                   height: 45,
                   width: double.infinity,
@@ -260,7 +260,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: const Text('Sign up'),
                   ),
                 ),
-                const SizedBox(height: 15.0),
+                const SizedBox(height: 25.0),
                 // sign up with google
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -287,7 +287,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 15.0),
+                const SizedBox(height: 25.0),
                 SizedBox(
                   width: double.infinity,
                   height: 45,
