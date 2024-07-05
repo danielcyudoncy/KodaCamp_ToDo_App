@@ -1,92 +1,49 @@
-import 'package:first_demo/util/dialog_widget.dart';
-import 'package:first_demo/util/task_widget.dart';
+import 'package:first_demo/controller/task_controller.dart';
+import 'package:first_demo/screens/task_detail_screen.dart';
+import 'package:first_demo/task_model/task_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../util/dialog_widget.dart';
+import '../util/task_widget.dart';
 
 class TodoHome extends StatefulWidget {
-  const TodoHome({super.key, required this.data, required this.name});
   final String name;
-  final String data;
+
+  const TodoHome({super.key, required this.name});
 
   @override
-  State<TodoHome> createState() => _TodoHomeState();
+ 
+  _TodoHomeState createState() => _TodoHomeState();
 }
 
 class _TodoHomeState extends State<TodoHome> {
-  final controller = TextEditingController();
-  List taskList = [
-    // ['Task 1', false],
-    // ['Task 2', true],
-  ];
+  final TaskController taskController = Get.put(TaskController());
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   int _selectedIndex = 0;
 
-  void taskCompleted(bool? value, int index) {
-    setState(() {
-      taskList[index][1] = !taskList[index][1];
-    });
-  }
-
-  void saveNewTask() {
-    setState(() {
-      taskList.add([controller.text, false]);
-      controller.clear();
-    });
-    Navigator.pop(context);
-  }
-
-  void deleteTask(int index) {
-    setState(() {
-      taskList.removeAt(index);
-    });
-  }
-
-  void createNewTask() {
+  void createNewTask(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
         return DialogWidget(
-          controller: controller,
+          controller: titleController,
           onSave: () {
-            saveNewTask();
+            final newTask = Task(
+              title: titleController.text,
+              description: descriptionController.text,
+              dateCreated: DateTime.now(),
+            );
+            taskController.addTask(newTask);
+            titleController.clear();
+            descriptionController.clear();
+            Navigator.pop(context);
           },
           onCancel: () {
-            Navigator.of(context).pop();
+            titleController.clear();
+            descriptionController.clear();
+            Navigator.pop(context);
           },
-        );
-      },
-    );
-  }
-
-  void editTask(BuildContext context, int index) {
-    final TextEditingController taskController =
-        TextEditingController(text: taskList[index][0]);
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Edit Task'),
-          content: TextField(
-            controller: taskController,
-            decoration: const InputDecoration(labelText: 'Task Name'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                final editedTaskName = taskController.text;
-                setState(() {
-                  taskList[index][0] = editedTaskName;
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text('Save'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-          ],
         );
       },
     );
@@ -96,47 +53,17 @@ class _TodoHomeState extends State<TodoHome> {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  int getTotalTasks() {
-    return taskList.length;
-  }
-
-  int getCompletedTasks() {
-    return taskList.where((task) => task[1] == true).length;
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 233, 216, 216),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 233, 216, 216),
-        title: Text(
-          'Hi,  ${widget.name}',
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              icon: const Icon(Icons.notifications),
-              onPressed: () {},
-            ),
-          ),
-        ],
+        title: Text('Hi, ${widget.name}'),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: createNewTask,
+        onPressed: () => createNewTask(context),
         child: const Icon(Icons.add),
       ),
       body: Column(
@@ -151,24 +78,31 @@ class _TodoHomeState extends State<TodoHome> {
                     color: Colors.white,
                     elevation: 2,
                     child: ListTile(
-                      title: const Text('Total Number of  Tasks'),
-                      trailing: Text(
-                        getTotalTasks().toString(),
-                        style: const TextStyle(fontSize: 20),
+                      title: const Text('Total Number of Tasks'),
+                      trailing: Obx(
+                        () => Text(
+                          taskController.taskList.length.toString(),
+                          style: const TextStyle(fontSize: 20),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8.0), // Space between the cards
+                const SizedBox(width: 8.0), 
                 Expanded(
                   child: Card(
                     color: Colors.white,
                     elevation: 2,
                     child: ListTile(
                       title: const Text('Completed Tasks'),
-                      trailing: Text(
-                        getCompletedTasks().toString(),
-                        style: const TextStyle(fontSize: 20),
+                      trailing: Obx(
+                        () => Text(
+                          taskController.taskList
+                              .where((task) => task.isCompleted)
+                              .length
+                              .toString(),
+                          style: const TextStyle(fontSize: 20),
+                        ),
                       ),
                     ),
                   ),
@@ -177,17 +111,80 @@ class _TodoHomeState extends State<TodoHome> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: taskList.length,
-              itemBuilder: (context, index) {
-                return TaskWidget(
-                  taskName: taskList[index][0],
-                  taskCompleted: taskList[index][1],
-                  onChanged: (value) => taskCompleted(value, index),
-                  onDelete: (value) => deleteTask(index),
-                  onEdit: (value) => editTask(context, index),
-                );
-              },
+            child: Obx(
+              () => ListView.builder(
+                itemCount: taskController.taskList.length,
+                itemBuilder: (context, index) {
+                  final task = taskController.taskList[index];
+                  return TaskWidget(
+                    taskName: task.title,
+                    taskCompleted: task.isCompleted,
+                    onChanged: (value) {
+                      if (value != null) {
+                        taskController.updateTask(
+                          index,
+                          Task(
+                            title: task.title,
+                            description: task.description,
+                            dateCreated: task.dateCreated,
+                            isCompleted: value,
+                          ),
+                        );
+                      }
+                    },
+                    onDelete: (context) => taskController.deleteTask(index),
+                    onEdit: (context) {
+                      titleController.text = task.title;
+                      descriptionController.text = task.description;
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Edit Task'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextField(
+                                  controller: titleController,
+                                  decoration: const InputDecoration(labelText: 'Task Title'),
+                                ),
+                                TextField(
+                                  controller: descriptionController,
+                                  decoration: const InputDecoration(labelText: 'Task Description'),
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  final editedTask = Task(
+                                    title: titleController.text,
+                                    description: descriptionController.text,
+                                    dateCreated: task.dateCreated,
+                                    isCompleted: task.isCompleted,
+                                  );
+                                  taskController.updateTask(index, editedTask);
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Save'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    onView: () {
+                      Get.to(TaskDetailScreen(task: task));
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],

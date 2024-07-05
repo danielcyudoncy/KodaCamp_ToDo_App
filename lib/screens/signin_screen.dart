@@ -1,62 +1,26 @@
+import 'package:first_demo/controller/sign_in_controller.dart';
 import 'package:first_demo/util/valid_email.dart';
-import 'package:first_demo/pages/signup_screen.dart';
-import 'package:first_demo/task_app/todo_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
-class SignInScreen extends StatefulWidget {
+import 'signup_screen.dart';
+
+class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  final _formKey = GlobalKey<FormState>();
-  bool agreePersonalData = false;
-  bool toggled = true;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _fullNameController = TextEditingController();
-
-  @override
-  void dispose() {
-    _fullNameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    _phoneNumberController.dispose();
-    super.dispose();
-  }
-
-  void _submit() {
-    if (_formKey.currentState?.validate() ?? false) {
-      _formKey.currentState?.save();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TodoHome(
-            data: 'Some data',
-            name: _fullNameController.text,
-          ),
-        ),
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final SignInController controller = Get.put(SignInController());
+
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Form(
-            key: _formKey,
+            key: controller.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -72,7 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 60.0,
                 ),
                 TextFormField(
-                  controller: _emailController,
+                  controller: controller.emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
@@ -95,76 +59,76 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: toggled,
-                  obscuringCharacter: '*',
-                  validator: (value) {
-                    if (value == null || value.isEmpty || value.length < 6) {
-                      return 'Password must be at least 6 characters long!';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: toggled
-                          ? const Icon(
-                              Icons.visibility_off,
-                            )
-                          : const Icon(
-                              Icons.visibility,
-                            ),
-                      onPressed: () {
-                        setState(() {
-                          toggled = !toggled;
-                        });
-                      },
-                    ),
-                    labelText: 'Password',
-                    hintText: 'Enter your password',
-                    hintStyle: const TextStyle(
-                      color: Colors.black26,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.black12,
+                Obx(
+                  () => TextFormField(
+                    controller: controller.passwordController,
+                    obscureText: controller.toggled.value,
+                    obscuringCharacter: '*',
+                    validator: (value) {
+                      if (value == null || value.isEmpty || value.length < 6) {
+                        return 'Password must be at least 6 characters long!';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: controller.toggled.value
+                            ? const Icon(
+                                Icons.visibility_off,
+                              )
+                            : const Icon(
+                                Icons.visibility,
+                              ),
+                        onPressed: () {
+                          controller.toggled.value = !controller.toggled.value;
+                        },
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                      labelText: 'Password',
+                      hintText: 'Enter your password',
+                      hintStyle: const TextStyle(
+                        color: Colors.black26,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.black12,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 25.0,
                 ),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: agreePersonalData,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          agreePersonalData = value!;
-                        });
-                      },
-                      activeColor: Colors.blue,
-                    ),
-                    const Text(
-                      'I agree to the processing of ',
-                      style: TextStyle(
-                        color: Colors.black45,
+                Obx(
+                  () => Row(
+                    children: [
+                      Checkbox(
+                        value: controller.agreePersonalData.value,
+                        onChanged: (bool? value) {
+                          controller.agreePersonalData.value = value!;
+                        },
+                        activeColor: Colors.blue,
                       ),
-                    ),
-                    const Gap(6),
-                    const Text(
-                      'Personal data',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                      const Text(
+                        'I agree to the processing of ',
+                        style: TextStyle(
+                          color: Colors.black45,
+                        ),
                       ),
-                    ),
-                  ],
+                      const Gap(6),
+                      const Text(
+                        'Personal data',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 15.0,
@@ -174,10 +138,10 @@ class _SignInScreenState extends State<SignInScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate() &&
-                          agreePersonalData) {
-                        _submit();
-                      } else if (!agreePersonalData) {
+                      if (controller.formKey.currentState!.validate() &&
+                          controller.agreePersonalData.value) {
+                        controller.submit();
+                      } else if (!controller.agreePersonalData.value) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
@@ -186,6 +150,14 @@ class _SignInScreenState extends State<SignInScreen> {
                         );
                       }
                     },
+                     style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(350, 50),
+                    backgroundColor: const Color.fromARGB(255, 31, 44, 226),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                  ),
                     child: const Text('Sign In'),
                   ),
                 ),
@@ -257,12 +229,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (e) => const SignUpScreen(),
-                          ),
-                        );
+                        Get.offAll(() =>  SignUpScreen());
                       },
                       child: const Text(
                         'Sign up',
