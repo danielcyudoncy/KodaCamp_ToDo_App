@@ -49,7 +49,7 @@ class TaskWidget extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 0.4,
                   blurRadius: 5,
-                  offset: const Offset(0, 1), // changes position of shadow
+                  offset: const Offset(0, 1), 
                 ),
               ],
             ),
