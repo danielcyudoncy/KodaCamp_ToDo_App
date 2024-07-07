@@ -1,10 +1,10 @@
 import 'package:first_demo/controller/task_controller.dart';
 import 'package:first_demo/screens/task_detail_screen.dart';
 import 'package:first_demo/task_model/task_model.dart';
+import 'package:first_demo/util/dialog_widget.dart';
+import 'package:first_demo/util/task_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../util/dialog_widget.dart';
-import '../util/task_widget.dart';
 
 class TodoHome extends StatefulWidget {
   final String name;
@@ -12,38 +12,45 @@ class TodoHome extends StatefulWidget {
   const TodoHome({super.key, required this.name});
 
   @override
- 
   _TodoHomeState createState() => _TodoHomeState();
 }
 
 class _TodoHomeState extends State<TodoHome> {
   final TaskController taskController = Get.put(TaskController());
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
+  late TextEditingController taskNameController;
+  late TextEditingController taskDescriptionController;
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    taskNameController = TextEditingController();
+    taskDescriptionController = TextEditingController();
+  }
 
   void createNewTask(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
         return DialogWidget(
-          controller: titleController,
           onSave: () {
             final newTask = Task(
-              title: titleController.text,
-              description: descriptionController.text,
+              title: taskNameController.text,
+              description: taskDescriptionController.text,
               dateCreated: DateTime.now(),
             );
             taskController.addTask(newTask);
-            titleController.clear();
-            descriptionController.clear();
+            taskNameController.clear();
+            taskDescriptionController.clear();
             Navigator.pop(context);
           },
           onCancel: () {
-            titleController.clear();
-            descriptionController.clear();
+            taskNameController.clear();
+            taskDescriptionController.clear();
             Navigator.pop(context);
           },
+          taskNameController: taskNameController,
+          taskDescriptionController: taskDescriptionController,
         );
       },
     );
@@ -53,7 +60,6 @@ class _TodoHomeState extends State<TodoHome> {
     setState(() {
       _selectedIndex = index;
     });
-    
   }
 
   @override
@@ -88,7 +94,7 @@ class _TodoHomeState extends State<TodoHome> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8.0), 
+                const SizedBox(width: 8.0),
                 Expanded(
                   child: Card(
                     color: Colors.white,
@@ -134,8 +140,8 @@ class _TodoHomeState extends State<TodoHome> {
                     },
                     onDelete: (context) => taskController.deleteTask(index),
                     onEdit: (context) {
-                      titleController.text = task.title;
-                      descriptionController.text = task.description;
+                      taskNameController.text = task.title;
+                      taskDescriptionController.text = task.description;
                       showDialog(
                         context: context,
                         builder: (context) {
@@ -145,30 +151,46 @@ class _TodoHomeState extends State<TodoHome> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 TextField(
-                                  controller: titleController,
-                                  decoration: const InputDecoration(labelText: 'Task Title'),
+                                  controller: taskNameController,
+                                  decoration: InputDecoration(labelText: 'Task Title',
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0))),
+                                  onChanged: (text) {
+                                    taskNameController.text = text;
+                                  },
                                 ),
+                                const SizedBox(height: 12,),
                                 TextField(
-                                  controller: descriptionController,
-                                  decoration: const InputDecoration(labelText: 'Task Description'),
+                                  controller: taskDescriptionController,
+                                  decoration: InputDecoration(labelText: 'Task Description',
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0))),
+                                  onChanged: (text) {
+                                    taskDescriptionController.text = text;
+                                  },
                                 ),
                               ],
                             ),
                             actions: [
-                              TextButton(
+                              TextButton(style: TextButton.styleFrom(foregroundColor: Colors.white, backgroundColor: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),),
                                 onPressed: () {
                                   final editedTask = Task(
-                                    title: titleController.text,
-                                    description: descriptionController.text,
+                                    title: taskNameController.text,
+                                    description: taskDescriptionController.text,
                                     dateCreated: task.dateCreated,
                                     isCompleted: task.isCompleted,
                                   );
                                   taskController.updateTask(index, editedTask);
                                   Navigator.of(context).pop();
                                 },
-                                child: const Text('Save'),
+                                child: const Text('Save',),
                               ),
                               TextButton(
+                                style: TextButton.styleFrom(foregroundColor: Colors.white, backgroundColor: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

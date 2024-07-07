@@ -44,6 +44,14 @@ class TaskWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 0.4,
+                  blurRadius: 5,
+                  offset: const Offset(0, 1), // changes position of shadow
+                ),
+              ],
             ),
             child: ListTile(
               leading: Checkbox(
