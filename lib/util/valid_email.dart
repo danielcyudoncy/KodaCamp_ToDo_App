@@ -10,3 +10,9 @@ String? validateEmail(String email) {
   }
   return null;
 }
+class ValidEmail {
+  bool validate(String email) {
+    final RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return regex.hasMatch(email);
+  }
+}

@@ -1,47 +1,69 @@
-import 'package:first_demo/util/dialog_button.dart';
 import 'package:flutter/material.dart';
 
 class DialogWidget extends StatelessWidget {
-  const DialogWidget(
-      {super.key,
-      required this.onSave,
-      required this.onCancel,
-      required this.controller});
-
   final VoidCallback onSave;
   final VoidCallback onCancel;
-  final TextEditingController controller;
+  final TextEditingController taskNameController;
+  final TextEditingController taskDescriptionController;
+
+  const DialogWidget({
+    super.key,
+    required this.onSave,
+    required this.onCancel,
+    required this.taskNameController,
+    required this.taskDescriptionController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      content: SizedBox(
-        height: 120,
-        child: Column(
-          children: [
-            TextField(
-              controller: controller,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), hintText: 'Create a task'),
+      title: const Text('Create Your Task'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: taskNameController,
+            decoration: InputDecoration(
+              labelText: 'Task Title',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                DialogBotton(
-                  text: 'Save',
-                  onPressed: onSave,
-                ),
-                const SizedBox(width: 8.0),
-                DialogBotton(
-                  text: 'Cancel',
-                  onPressed: onCancel,
-                ),
-              ],
-            )
-          ],
-        ),
+          ),
+          const SizedBox(height: 10),
+          TextField(
+            controller: taskDescriptionController,
+            decoration: InputDecoration(
+              labelText: 'Task Description',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          ),
+        ],
       ),
+      actions: [
+        TextButton(
+          onPressed: onCancel,
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.white, backgroundColor: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: onSave,
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.white, backgroundColor: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
+          child: const Text('Save'),
+        ),
+      ],
     );
   }
 }

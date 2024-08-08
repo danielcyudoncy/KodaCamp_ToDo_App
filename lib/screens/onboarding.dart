@@ -1,8 +1,10 @@
-import 'package:first_demo/pages/signin_screen.dart';
-import 'package:first_demo/pages/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+
+import 'signin_screen.dart';
+import 'signup_screen.dart';
 
 class Onboarding extends StatelessWidget {
   const Onboarding({super.key});
@@ -16,9 +18,7 @@ class Onboarding extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset('assets/images/login_image.svg'),
-            const SizedBox(
-              height: 50.0,
-            ),
+            const SizedBox(height: 50.0),
             RichText(
               text: const TextSpan(
                 text: '!We welcome you to',
@@ -35,9 +35,7 @@ class Onboarding extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10.0,
-            ),
+            const SizedBox(height: 10.0),
             const Text(
               'Manage all your projects and tasks \n in one place',
               textAlign: TextAlign.center,
@@ -52,11 +50,7 @@ class Onboarding extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SignInScreen(),
-                      ),
-                    );
+                    Get.to(() => const SignInScreen());
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(350, 50),
@@ -81,19 +75,12 @@ class Onboarding extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Text(
                     'Don\'t have an account? ',
-                    style: TextStyle(
-                      color: Colors.black54,
-                    ),
+                    style: TextStyle(color: Colors.black54),
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (e) => const SignUpScreen(),
-                      ),
-                    );
+                    Get.to(() => SignUpScreen());
                   },
                   child: const Text(
                     'Sign up',
@@ -105,9 +92,7 @@ class Onboarding extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10.0,
-            ),
+            const SizedBox(height: 10.0),
           ],
         ),
       ),

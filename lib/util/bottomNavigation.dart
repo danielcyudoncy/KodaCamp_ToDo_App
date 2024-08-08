@@ -4,11 +4,11 @@ class BottomNavigationExample extends StatefulWidget {
   const BottomNavigationExample({super.key});
 
   @override
-  _BottomNavigationExampleState createState() =>
-      _BottomNavigationExampleState();
+    BottomNavigationExampleState createState() =>
+      BottomNavigationExampleState();
 }
 
-class _BottomNavigationExampleState extends State<BottomNavigationExample> {
+class BottomNavigationExampleState extends State<BottomNavigationExample> {
   int _selectedTab = 0;
 
   final List<Widget> _pages = [
